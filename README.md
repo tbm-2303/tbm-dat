@@ -1,1 +1,2 @@
-# tbm-dat
+timothy busk mortensen
+datamatiker C
