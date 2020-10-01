@@ -44,6 +44,7 @@ class Game
     
     
     
+    
     for(int i = 0; i < numberOfEnemies; ++i)
     {
       enemies[i] = new Dot(width-1, height-1, width-1, height-1);
@@ -73,13 +74,20 @@ class Game
     }
     else
     {
-      return 0;
+     return 0;
     }
   }
   
   public int getPlayerLife1()
   {
+    if(playerLife > 0)
+    {
     return playerLife1;
+    }
+    else
+    {
+    return 0;
+    }
   }
   
   public void onKeyPressed(char ch)
@@ -102,9 +110,7 @@ class Game
   {
     keys.onKeyReleased_1(code);
   }
-  
-  
-  
+ 
   public void update()
   {
     updatePlayer();
@@ -118,15 +124,11 @@ class Game
     clearBoard();
     populateBoard();
   }
-  
-
-  
-  
+ 
   public int[][] getBoard()
   {
     //ToDo: Defensive copy?
-    return board;
-    
+    return board; 
   }
   
   private void clearBoard()
@@ -342,9 +344,7 @@ class Game
       noLoop();
       println("gameover player1 has won");
     }
-  }
- 
-      
+  } 
    
   private void checkForCollisions()
   {
@@ -353,8 +353,11 @@ class Game
     {
       if(enemies[i].getX() == player.getX() && enemies[i].getY() == player.getY())
       {
+        if(playerLife > 0)
+        {
         //We have a collision
         --playerLife;
+        }
       }
     }
   }
@@ -366,8 +369,11 @@ class Game
     {
       if(enemies[i].getX() == player1.getX() && enemies[i].getY() == player1.getY())
       {
+        if(playerLife1 > 0)
+        {
         //We have a collision
         --playerLife1;
+        }
       }
     }
   }
@@ -379,23 +385,30 @@ class Game
     {
       if(mad[i].getX() == player.getX() && mad[i].getY() == player.getY())
       {
+        if(playerLife < 100)
+        {
         //We have a collision
-       playerLife += 3;
+       playerLife += 1;
+        }
        mad[i].x = round(random(0,width-1));
        mad[i].y = round(random(0,height-1));
+       
       }
     }
   }
   
-   private void checkForCollisions3()
-  {
+ private void checkForCollisions3()
+ {
     //Check player1 collisions with food
     for(int i = 0; i < mad.length; ++i)
     {
       if(mad[i].getX() == player1.getX() && mad[i].getY() == player1.getY())
       {
+        if(playerLife1 < 100)
+        {
         //We have a collision
-        playerLife1 += 3;   
+        playerLife1 += 1;   
+        }
         mad[i].x = round(random(0,width-1));
         mad[i].y = round(random(0,height-1));
       }
